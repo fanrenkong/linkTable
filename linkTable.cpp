@@ -6,29 +6,29 @@ typedef struct linkTable{
 	struct linkTable *next;
 }linkTable,*plt;
 plt createFromHead(){
-	//Í·²¿²åÈë·¨´´½¨Á´±í
+	//å¤´éƒ¨æ’å…¥æ³•åˆ›å»ºé“¾è¡¨
 	plt header = (plt)malloc(sizeof(linkTable)),tmp;
 	header->next = NULL;
 	char status;
-	printf("ÊÇ·ñ²åÈëÔªËØ(y/n):");
+	printf("æ˜¯å¦æ’å…¥å…ƒç´ (y/n):");
 	scanf("%c",&status);
 	while(status == 'y'){
-		printf("ÇëÊäÈëÔªËØµÄÖµ:");
+		printf("è¯·è¾“å…¥å…ƒç´ çš„å€¼:");
 		tmp = (plt)malloc(sizeof(linkTable));
 		scanf("%d",&tmp->data);
 		tmp->next = header->next;
 		header->next = tmp;
-		getchar();//Çå³ı»º´æÇøµÄ»Ø³µ·û
-		printf("ÊÇ·ñ²åÈëÔªËØ(y/n):");
+		getchar();//æ¸…é™¤ç¼“å­˜åŒºçš„å›è½¦ç¬¦
+		printf("æ˜¯å¦æ’å…¥å…ƒç´ (y/n):");
 		scanf("%c",&status);
 	}
-	return header;//·µ»ØÍ·½Úµã
+	return header;//è¿”å›å¤´èŠ‚ç‚¹
 }
 int list(plt header){
 	plt ptr = header->next;
 	int count = 0;
 	if(header->next != NULL){
-		printf("Á´±íµÄÔªËØÎª:\n");
+		printf("é“¾è¡¨çš„å…ƒç´ ä¸º:\n");
 		while(ptr != NULL){
 			count ++;
 			printf("%d\t",ptr->data);
@@ -36,82 +36,81 @@ int list(plt header){
 		}
 		printf("\n");
 	}else{
-		printf("ÇëÏÈ´´½¨Á´±í£¡\n");
+		printf("è¯·å…ˆåˆ›å»ºé“¾è¡¨ï¼\n");
 	}
 	return count;
 }
 plt findCenter(plt header){
-	//ÕÒµ½ÖĞ¼ä½Úµã£¬²ÉÓÃ¿ìÂıÖ¸ÕëµÄ·½Ê½£¬µ±ÂıÖ¸ÕëµÄÎ»ÖÃÒ»¶¨ÊÇ¿ìÖ¸ÕëÎ»ÖÃµÄÒ»°ë
-	//ËùÒÔµ±¿ìÖ¸Õë×ßÍêÈ«²¿ÔªËØºó£¬ÂıÖ¸ÕëµÄÎ»ÖÃ¾ÍÊÇÖĞ¼äÔªËØµÄÎ»ÖÃ
+	//æ‰¾åˆ°ä¸­é—´èŠ‚ç‚¹ï¼Œé‡‡ç”¨å¿«æ…¢æŒ‡é’ˆçš„æ–¹å¼ï¼Œå½“æ…¢æŒ‡é’ˆçš„ä½ç½®ä¸€å®šæ˜¯å¿«æŒ‡é’ˆä½ç½®çš„ä¸€åŠ
+	//æ‰€ä»¥å½“å¿«æŒ‡é’ˆèµ°å®Œå…¨éƒ¨å…ƒç´ åï¼Œæ…¢æŒ‡é’ˆçš„ä½ç½®å°±æ˜¯ä¸­é—´å…ƒç´ çš„ä½ç½®
 	plt fast,slow;
 	fast = slow = header;
-	if(header->next !=NULL){
-		while(fast->next !=NULL){
+	if(header->next != NULL){
+		while(fast->next != NULL){
 		fast = fast->next->next;
 		slow = slow->next;
 		if(fast == NULL) break;
 		}
 	}else{
-		printf("ÇëÏÈ´´½¨Á´±í£¡\n");
+		printf("è¯·å…ˆåˆ›å»ºé“¾è¡¨ï¼\n");
 		slow = slow->next;
 	}
 	return slow;
 }
 plt find(plt header,int index){
-	//²éÕÒĞòºÅÎªindexµÄÔªËØ
+	//æŸ¥æ‰¾åºå·ä¸ºindexçš„å…ƒç´ 
 	int i;
 	plt ptr = header;
 	if(header->next != NULL){
 		for(i=0;i<=index;i++) ptr = ptr->next;
 	}else{
-		printf("ÇëÏÈ´´½¨Á´±í£¡\n");
+		printf("è¯·å…ˆåˆ›å»ºé“¾è¡¨ï¼\n");
 		ptr = header->next;//NULL
 	}
 	return ptr;
 }
 int insertNode(plt header,int index,elemType data){
-	//ÔÚÖ¸¶¨Î»ÖÃ²åÈë½Úµã£¬³É¹¦·µ»ØĞòºÅ£¬Ê§°Ü·µ»Ø-1
+	//åœ¨æŒ‡å®šä½ç½®æ’å…¥èŠ‚ç‚¹ï¼ŒæˆåŠŸè¿”å›åºå·ï¼Œå¤±è´¥è¿”å›-1
 	plt ptr = header;
 	int i;
 	if(header->next != NULL){
-		for(i=0;i<index;i++) ptr = ptr->next;//ÕÒµ½Ö¸¶¨Î»ÖÃÔªËØµÄÇ°Ò»¸ö½Úµã
+		for(i=0;i<index;i++) ptr = ptr->next;//æ‰¾åˆ°æŒ‡å®šä½ç½®å…ƒç´ çš„å‰ä¸€ä¸ªèŠ‚ç‚¹
 		plt new_Elem = (plt)malloc(sizeof(linkTable));
 		new_Elem->data = data;
 		new_Elem->next = ptr->next;
 		ptr->next = new_Elem;
 		return index;
 	}else{
-		printf("ÇëÏÈ´´½¨Á´±í£¡\n");
+		printf("è¯·å…ˆåˆ›å»ºé“¾è¡¨ï¼\n");
 		return -1;
 	}
 }
 int delNode(plt header,int index){
-	//É¾³ıÖ¸¶¨ĞòºÅµÄ½Úµã£¬É¾³ı³É¹¦·µ»Ø1£¬½Úµã²»´æÔÚ·µ»Ø-1£¬Á´±íÎ´´´½¨·µ»Ø0
+	//åˆ é™¤æŒ‡å®šåºå·çš„èŠ‚ç‚¹ï¼Œåˆ é™¤æˆåŠŸè¿”å›1ï¼ŒèŠ‚ç‚¹ä¸å­˜åœ¨è¿”å›-1ï¼Œé“¾è¡¨æœªåˆ›å»ºè¿”å›0
 	if(header->next != NULL){
 		int i;
 		plt ptr = header,tmp;
 		for(i=0;i<index;i++) ptr = ptr->next;
-		tmp = ptr->next;//ÒªÉ¾³ıµÄ½Úµã
-		ptr->next = ptr->next->next;//´ÓÁ´±íÖĞÉ¾³ı¸Ã½Úµã
-		free(tmp);//ÊÍ·ÅÄÚ´æ¿Õ¼ä
+		tmp = ptr->next;//è¦åˆ é™¤çš„èŠ‚ç‚¹
+		ptr->next = ptr->next->next;//ä»é“¾è¡¨ä¸­åˆ é™¤è¯¥èŠ‚ç‚¹
+		free(tmp);//é‡Šæ”¾å†…å­˜ç©ºé—´
 		return 1;
 	}else{
-		printf("ÇëÏÈ´´½¨Á´±í£¡\n");
+		printf("è¯·å…ˆåˆ›å»ºé“¾è¡¨ï¼\n");
 		return 0;
 	}
 }
 int main(){
 	plt header = createFromHead();
 	int length = list(header);
-	/*plt center = findCenter(header);
+	plt center = findCenter(header);
 	if(length%2 == 0){
-		printf("ÖĞ¼ä½ÚµãÊÇ:%dºÍ%d\n",center->data,center->next->data);
+		printf("ä¸­é—´èŠ‚ç‚¹æ˜¯:%då’Œ%d\n",center->data,center->next->data);
 	}else{
-		printf("ÖĞ¼ä½ÚµãÊÇ:%d\n",center->data);
+		printf("ä¸­é—´èŠ‚ç‚¹æ˜¯:%d\n",center->data);
 	}
-	*/
 	/*plt target = find(header,2);
-	printf("Ë÷ÒıÎª2µÄÔªËØÊÇ:%d\n",target->data);*/
+	printf("ç´¢å¼•ä¸º2çš„å…ƒç´ æ˜¯:%d\n",target->data);*/
 	/*insertNode(header,2,3);
 	list(header);*/
 	delNode(header,2);
